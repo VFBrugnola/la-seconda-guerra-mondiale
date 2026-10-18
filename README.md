@@ -51,10 +51,6 @@ la-seconda-guerra-mondiale/
 - Tile ESRI Dark Gray con fallback CartoDB
 - File unico HTML + dati separati in JS, nessun framework
 
-## Uso didattico
-
-Progetto realizzato per le classi di storia del Liceo IS Bertrand Russell di Guastalla (RE). Liberamente utilizzabile da altri docenti con citazione dell'autore.
-
 ## Licenza
 
 © 2025 Fabrizio Brugnola — [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)  
