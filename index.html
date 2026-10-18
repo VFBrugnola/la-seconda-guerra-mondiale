@@ -100,10 +100,9 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d0d0d;color:#e8e8e8;he
 .shoah-card h4{font-size:0.78rem;color:#f5c6c6;margin-bottom:3px}
 .shoah-card p{font-size:0.7rem;color:#c89090;line-height:1.4}
 .shoah-tipo{font-size:0.64rem;display:inline-block;padding:1px 6px;border-radius:2px;margin-bottom:4px}
-.tipo-sterminio{background:#7b0000;color:#ffcdd2}
-.tipo-concentramento{background:#4a0000;color:#ffcdd2}
-.tipo-ghetto{background:#3e2000;color:#ffe0b2}
-.tipo-strage{background:#1a0030;color:#e1bee7}
+.tipo-sterminio{background:#111111;color:#ffcdd2}
+.tipo-lavoro{background:#4E342E;color:#ffe0b2}
+.tipo-transito{background:#616161;color:#e0e0e0}
 
 /* TAB PERDITE */
 #tab-perdite{display:none;padding:16px;overflow-y:auto}
@@ -220,7 +219,21 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d0d0d;color:#e8e8e8;he
 <div id="tab-shoah" style="flex:1;display:none;flex-direction:column;overflow:hidden">
   <div id="shoah-map" style="flex:1"></div>
   <div id="shoah-side" style="height:280px;overflow-y:auto;background:#0d0000;border-top:2px solid #7b0000;padding:12px">
-    <h3 style="color:#f5c6c6;font-size:0.85rem;margin-bottom:8px">La Shoah — Luoghi della Memoria</h3>
+    <h3 style="color:#f5c6c6;font-size:0.85rem;margin-bottom:6px">La Shoah — Luoghi della Memoria</h3>
+    <div style="display:flex;gap:14px;margin-bottom:10px;flex-wrap:wrap">
+      <div style="display:flex;align-items:center;gap:5px;font-size:0.68rem;color:#ccc">
+        <svg width="12" height="10" viewBox="0 0 100 87"><polygon points="50,87 0,0 100,0" fill="#111111" stroke="#555" stroke-width="8"/></svg>
+        Campo di sterminio
+      </div>
+      <div style="display:flex;align-items:center;gap:5px;font-size:0.68rem;color:#ccc">
+        <svg width="12" height="10" viewBox="0 0 100 87"><polygon points="50,87 0,0 100,0" fill="#4E342E" stroke="#a07060" stroke-width="8"/></svg>
+        Campo di lavoro
+      </div>
+      <div style="display:flex;align-items:center;gap:5px;font-size:0.68rem;color:#ccc">
+        <svg width="12" height="10" viewBox="0 0 100 87"><polygon points="50,87 0,0 100,0" fill="#757575" stroke="#bbb" stroke-width="8"/></svg>
+        Campo di transito
+      </div>
+    </div>
     <div id="shoah-list"></div>
   </div>
 </div>
@@ -672,16 +685,24 @@ function initShoahMap(){
   L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',
     {maxZoom:17}).addTo(shoahMap);
 
-  var SHOAH_COLORI={'sterminio':'#7b0000','concentramento':'#3e1a00','ghetto':'#4a3000','strage':'#1a0030'};
-  var SHOAH_ICONE={'sterminio':'☠','concentramento':'⛓','ghetto':'✡','strage':'●'};
+  var SHOAH_COLORI={'sterminio':'#111111','lavoro':'#4E342E','transito':'#757575'};
+  var SHOAH_BORDI={'sterminio':'#555','lavoro':'#a07060','transito':'#bbb'};
+
+  function triangoloSVG(col, bordo, size){
+    var h=Math.round(size*0.87);
+    return '<svg width="'+size+'" height="'+h+'" viewBox="0 0 100 87" xmlns="http://www.w3.org/2000/svg">'
+      +'<polygon points="50,87 0,0 100,0" fill="'+col+'" stroke="'+bordo+'" stroke-width="6"/>'
+      +'</svg>';
+  }
 
   SHOAH.forEach(function(s){
     var col=SHOAH_COLORI[s.tipo]||'#444';
-    var ico=SHOAH_ICONE[s.tipo]||'●';
-    var size=s.vittime?Math.max(20,Math.min(44,20+Math.sqrt(s.vittime/10000)*4)):20;
+    var bordo=SHOAH_BORDI[s.tipo]||'#888';
+    var size=s.vittime?Math.max(18,Math.min(48,18+Math.sqrt(s.vittime/10000)*4)):18;
+    var h=Math.round(size*0.87);
     var marker=L.marker([s.lat,s.lng],{icon:L.divIcon({
-      html:'<div style="background:'+col+';color:#ffcdd2;border-radius:50%;width:'+size+'px;height:'+size+'px;display:flex;align-items:center;justify-content:center;font-size:'+Math.round(size*0.5)+'px;border:2px solid #ff8a80;box-shadow:0 0 8px rgba(200,0,0,.5)">'+ico+'</div>',
-      iconSize:[size,size],iconAnchor:[size/2,size/2],className:''
+      html:'<div style="filter:drop-shadow(0 0 4px rgba(0,0,0,.8))">'+triangoloSVG(col,bordo,size)+'</div>',
+      iconSize:[size,h],iconAnchor:[size/2,h],className:''
     })});
     var vit=s.vittime?'<div style="color:#ff8a80;font-size:0.72rem;margin-top:5px">Vittime stimate: ~'+s.vittime.toLocaleString()+'</div>':'';
     marker.bindPopup(
