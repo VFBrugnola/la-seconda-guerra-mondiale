@@ -53,8 +53,6 @@ la-seconda-guerra-mondiale/
 
 ## Licenza
 
-© 2025 Fabrizio Brugnola — [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)  
-Libero utilizzo con citazione dell'autore.
+© Fabrizio Brugnola — [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/deed.it) (Attribuzione – Non commerciale). Testo completo nel file [LICENSE](LICENSE).
 
-> *La Seconda Guerra Mondiale — Mappa Interattiva* — Fabrizio Brugnola, 2025  
-> https://vfbrugnola.github.io/la-seconda-guerra-mondiale/
+Puoi usare, condividere e modificare questi materiali **citando l'autore** e indicando le eventuali modifiche. **Non è consentito l'uso a scopo commerciale.** I materiali di terzi eventualmente inclusi (dati, immagini, librerie) restano soggetti alle rispettive licenze.
